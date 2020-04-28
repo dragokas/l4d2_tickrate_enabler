@@ -52,15 +52,27 @@
 const int g_FrameTimeReadOffsets[] =
 #if defined (_LINUX)
 #if defined (L4D1)
-	{0x1DD, 0x38D}; // L4D1 LINUX
+	{0x13D, 0x380}; // L4D1 LINUX
 #elif defined (L4D2)
 	{0x12D, 0x5FD}; // L4D2 LINUX
 #endif
 #elif defined (_WIN32)
 #if defined (L4D1)
 	{0x173, 0x2CD, 0x476};
+	/* 371, 717, 1142 */
+	/* 
+	0x173	=	371		= .text:102CEB33 A1 B0 9A 5E 10                          mov     eax, dword_105E9AB0
+	0x2CD	=	717 	= .text:102CEC8D A1 B0 9A 5E 10                          mov     eax, dword_105E9AB0
+	0x476	=	1142	= .text:102CEE36 A1 B0 9A 5E 10                          mov     eax, dword_105E9AB0
+	*/
 #elif defined (L4D2)
-	{0x1E3, 0x37A, 0x52B};
+	{0x1DC, 0x36E, 0x533};
+	/* 476, 878, 1331 */
+	/* 
+	0x1DC	=	476		= .text:1035C3CC A1 E8 1B 7D 10                          mov     eax, dword_107D1BE8
+	0x36E	=	878 	= .text:1035C55E A1 E8 1B 7D 10                          mov     eax, dword_107D1BE8
+	0x533	=	1331	= .text:1035C723 A1 E8 1B 7D 10                          mov     eax, dword_107D1BE8
+	*/
 #endif
 #endif
 #define NUM_FRAMETIME_READS (sizeof(g_FrameTimeReadOffsets)/sizeof(g_FrameTimeReadOffsets[0]))
@@ -89,8 +101,8 @@ const int g_FrameTimeReadOffsets[] =
 #elif defined (_LINUX)
 	#define SIG_CNETCHAN_SETDATARATE "_ZN8CNetChan11SetDataRateEf"
 #if defined (L4D1)
-	// Change comparison jump at +0x20 to NOP2, removing upper bound check.
-	#define CNETCHAN_PATCH_OFFSET 0x20
+	// Change comparison jump at +0x1E to NOP2, removing upper bound check.
+	#define CNETCHAN_PATCH_OFFSET 0x1E
 	#define CNETCHAN_PATCH_CHECK_BYTE JA_8_OPCODE
 #elif defined (L4D2)
 	#define CNETCHAN_PATCH_OFFSET 0x18
@@ -132,7 +144,7 @@ const int g_FrameTimeReadOffsets[] =
 	
 	Filling this with NOPs
 	*/
-	#define CGAMECLIENT_PATCH_OFFSET 0x4E
+	#define CGAMECLIENT_PATCH_OFFSET 0x4D
 	#define CGAMECLIENT_PATCH_CHECK_BYTE MOV_R32_IMM32_OPCODE
 #endif
 
@@ -156,7 +168,7 @@ const int g_FrameTimeReadOffsets[] =
 	*/
 	#define CLAMPCLIENTRATE_PATCH_CHECK_BYTE MOV_R32_IMM32_OPCODE
 #if defined (L4D1)
-	#define CLAMPCLIENTRATE_PATCH_OFFSET 0x42
+	#define CLAMPCLIENTRATE_PATCH_OFFSET 0x40
 #elif defined (L4D2)
 	#define CLAMPCLIENTRATE_PATCH_OFFSET 0x38
 #endif
